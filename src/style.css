@@ -35,3 +35,29 @@ body {
 .active {
     background-color: gray;
 }
+
+
+
+
+/* Content and ToDos */
+
+.todo-button {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+    border-radius: 50%;
+    font-size: 3rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.todo-button span {
+    border: none;
+    padding-bottom: 4px;
+}
