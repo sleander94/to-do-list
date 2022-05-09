@@ -1,4 +1,5 @@
 import './style.css';
+import {List, makeNewListButton} from './list.js';
 
 
 // Header
@@ -11,10 +12,29 @@ document.body.appendChild(header);
 
 
 
+
+// Sidebar
 const sidebar = document.createElement('div');
 sidebar.classList.toggle('sidebar')
 document.body.appendChild(sidebar);
 
+// Create default list 'Tasks'
+const tasks = new List('Tasks');
+tasks.addToSidebar();
+
+// Add new list to sidebar
+
+
+
+
+
+makeNewListButton()
+
+
+
+// Content
 const content = document.createElement('div');
 content.classList.toggle('content')
 document.body.appendChild(content);
+
+
