@@ -4,8 +4,7 @@ export class List {
         this.tasks = [];
     }
 
-    addToSidebar() {
-        const sidebar = document.querySelector('.sidebar');
+    addToPage(location) {
         const button = document.createElement('button');
         button.type = 'button';
         button.classList.toggle('active');
@@ -20,23 +19,22 @@ export class List {
                 this.display();
             }
         });
-        sidebar.appendChild(button);
+        location.appendChild(button);
     }
 
     addToDo(toDo) {
         this.tasks.push(toDo);
     }
 
-    display() {
-        const content = document.querySelector('.content');
-        content.innerHTML = '';
+    display(location) {
+        location.innerHTML = '';
         const taskContainer = document.createElement('div');
         this.tasks.forEach(task => {
             const taskString = document.createElement('div');
             taskString.textContent = `${task.name} | ${task.date}`;
             taskContainer.appendChild(taskString);
         });
-        content.appendChild(taskContainer);
+        location.appendChild(taskContainer);
     }
 
 }
