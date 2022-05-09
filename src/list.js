@@ -8,7 +8,17 @@ export class List {
         const sidebar = document.querySelector('.sidebar');
         const button = document.createElement('button');
         button.type = 'button';
+        button.classList.toggle('active');
         button.textContent = this.name;
+        button.addEventListener('click', () => {
+            if (button.classList.contains('active')) {
+                return;
+            } else {
+                const currentActiveButton = document.querySelector('.active');
+                currentActiveButton.classList.toggle('active');
+                button.classList.toggle('active');
+            }
+        });
         sidebar.appendChild(button);
     }
 }
@@ -44,6 +54,8 @@ function newListInput() {
             alert('Enter a name for the list');
         } else { 
             sidebar.removeChild(inputContainer);
+            const currentActiveButton = document.querySelector('.active');
+            currentActiveButton.classList.toggle('active');
             const newList = new List(listName.value);
             newList.addToSidebar();
             makeNewListButton();

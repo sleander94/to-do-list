@@ -31,3 +31,7 @@ body {
     min-width: 250px;
     background-color: rgb(215, 212, 212);
 }
+
+.active {
+    background-color: gray;
+}
