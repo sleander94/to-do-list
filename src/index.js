@@ -37,7 +37,7 @@ const page = (() => {
         sidebar.appendChild(newListButton);
     }
 
-    // Input for new list / submit & cancel buttons
+    // Input for new list / add & cancel buttons
     function newListInput() {
         const inputContainer = document.createElement('div');
 
@@ -57,7 +57,7 @@ const page = (() => {
                 activeList.classList.toggle('active');
                 const newList = new List(listName.value);
                 listArray.push(newList);
-                newList.addToPage(sidebar);
+                newList.addToPage(sidebar, content);
                 newList.display(content);
                 makeNewListButton();
             }
@@ -77,24 +77,69 @@ const page = (() => {
         sidebar.appendChild(inputContainer);
     }
 
-    // Add To-Do button
-    const addToDoButton = document.createElement('button');
-    addToDoButton.type = 'button';
-    addToDoButton.classList.toggle('todo-button');
-    const addToDoButtonSpan = document.createElement('span');
-    addToDoButtonSpan.textContent = '+';
-    addToDoButton.appendChild(addToDoButtonSpan);
-    addToDoButton.addEventListener('click', () => {
+    // Add todo button
+    function makeAddToDoButton() {
+        const addToDoButton = document.createElement('button');
+        addToDoButton.type = 'button';
+        addToDoButton.classList.toggle('todo-button');
+        const addToDoButtonSpan = document.createElement('span');
+        addToDoButtonSpan.textContent = '+';
+        addToDoButton.appendChild(addToDoButtonSpan);
+        addToDoButton.addEventListener('click', () => {
+            newToDoInput();
+        });
+        document.body.appendChild(addToDoButton);
+    }
 
-    });
-    document.body.appendChild(addToDoButton);
+    // Input for new todo / add & cancel buttons
+    function newToDoInput() {
+        const inputContainer = document.createElement('div');
+
+        const toDoName = document.createElement('input');
+        inputContainer.appendChild(toDoName);
+
+        const toDoDate = document.createElement('input');
+        inputContainer.appendChild(toDoDate);
+
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.classList.toggle('add');
+        addButton.textContent = 'Add';
+        addButton.addEventListener('click', () => {
+            if (toDoName.value == '') {
+                alert('Enter a name for the task');
+            } else { 
+                content.removeChild(inputContainer);
+                const activeButton = document.querySelector('.active');
+                listArray.forEach(list => {
+                    if (activeButton.textContent == list.name) {
+                        const newToDo = new ToDo(toDoName.value, toDoDate.value, 'normal');
+                        list.addToDo(newToDo);
+                        list.display(content);
+                    }
+                });
+            }
+        });
+        inputContainer.appendChild(addButton);
+
+        const cancelButton = document.createElement('button');
+        cancelButton.type = 'button'
+        cancelButton.classList.toggle('cancel');
+        cancelButton.textContent = 'Cancel'
+        cancelButton.addEventListener('click', () => {
+            content.removeChild(inputContainer);
+        });
+        inputContainer.appendChild(cancelButton);
+
+        content.appendChild(inputContainer);
+    }
 
 
 
     // Default list 'Tasks'
     const tasks = new List('Tasks');
     listArray.push(tasks);
-    tasks.addToPage(sidebar);
+    tasks.addToPage(sidebar, content);
 
     const test = new ToDo('test', '12/7', 'normal');
     const laundry = new ToDo('do laundry', 'today', 'high');
@@ -103,7 +148,7 @@ const page = (() => {
     tasks.display(content);
     // Add new list button to sidebar
     makeNewListButton()
-
+    makeAddToDoButton()
 })();
 
 
