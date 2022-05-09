@@ -40,10 +40,14 @@ function newListInput() {
     addButton.classList.toggle('add');
     addButton.textContent = 'Add';
     addButton.addEventListener('click', () => {
-        sidebar.removeChild(inputContainer);
-        const newList = new List(listName.value);
-        newList.addToSidebar();
-        makeNewListButton();
+        if (listName.value == '') {
+            alert('Enter a name for the list');
+        } else { 
+            sidebar.removeChild(inputContainer);
+            const newList = new List(listName.value);
+            newList.addToSidebar();
+            makeNewListButton();
+        }
     });
     inputContainer.appendChild(addButton);
 
