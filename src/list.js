@@ -72,6 +72,14 @@ export class List {
             priority.textContent = task.priority
             taskDiv.appendChild(priority);
 
+            if (task.priority == 'low') {
+                taskDiv.classList.toggle('low');
+            } else if (task.priority == 'normal') {
+                taskDiv.classList.toggle('normal');
+            } else if (task.priority == 'high') {
+                taskDiv.classList.toggle('high');
+            }
+
             const completeCheckBox = document.createElement('input');
             completeCheckBox.type = 'checkbox';
             completeCheckBox.addEventListener('change', () => {
