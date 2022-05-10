@@ -28,6 +28,7 @@ const page = (() => {
     // Sidebar button that generates new list input on click
     function makeNewListButton() {
         const newListButton = document.createElement('button');
+        newListButton.classList.toggle('new-list');
         newListButton.type = 'button';
         newListButton.textContent = 'New List +'
         newListButton.addEventListener('click', () => {
@@ -183,7 +184,7 @@ const page = (() => {
 
         document.body.appendChild(toDoContainer);
     }
-    
+
     // Create default list and store in local storage if local storage is empty
     if (localStorage.length < 1) {
         const tasks = new List('Tasks', []);
@@ -192,7 +193,7 @@ const page = (() => {
  
     // Loop through lists in local storage and populate listArray on page load
     function getListsFromStorage() {
-        for (let i=0; i < localStorage.length; i++ ) {
+        for (let i=localStorage.length -1; i >= 0; i-- ) {
             const listName = localStorage.key(i);
             const listData = JSON.parse(localStorage.getItem(listName));
             const list = new List(listData.name, listData.tasks); 
@@ -204,7 +205,6 @@ const page = (() => {
         } 
     }
     
-
     getListsFromStorage()
     makeNewListButton()
     makeAddToDoButton()
