@@ -183,26 +183,22 @@ const page = (() => {
 
         document.body.appendChild(toDoContainer);
     }
-
-    // Create default list if local storage is empty
+    
+    // Create default list and store in local storage if local storage is empty
     if (localStorage.length < 1) {
-        const tasks = new List('Tasks');
-        listArray.push(tasks);
-        tasks.addToPage(sidebar, content);
+        const tasks = new List('Tasks', []);
+        localStorage.setItem(`${tasks.name}`, JSON.stringify(tasks));
     }
-
+ 
     // Loop through lists in local storage and populate listArray on page load
     function getListsFromStorage() {
         for (let i=0; i < localStorage.length; i++ ) {
             const listName = localStorage.key(i);
             const listData = JSON.parse(localStorage.getItem(listName));
-            console.log(listData.tasks)
             const list = new List(listData.name, listData.tasks); 
-            console.log(list.tasks);
-            console.log(localStorage.length)
             listArray.push(list);
             list.addToPage(sidebar, content);
-            if (i == 0) {
+            if (i == 0){
                 list.display(content);
             }
         } 
