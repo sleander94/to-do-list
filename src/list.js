@@ -1,13 +1,15 @@
 export class List {
-    constructor(name) {
+    constructor(name, tasks) {
         this.name = name;
-        this.tasks = [];
+        this.tasks = tasks;
     }
 
     addToPage(buttonArea, taskArea) {
         const button = document.createElement('button');
         button.type = 'button';
-        button.classList.toggle('active');
+        if (!document.querySelector('.active')) {
+            button.classList.toggle('active');
+        }
         button.textContent = this.name;
         button.addEventListener('click', () => {
             if (button.classList.contains('active')) {
@@ -22,12 +24,18 @@ export class List {
         buttonArea.appendChild(button);
     }
 
+    testFunction() {
+        console.log('success!');
+    }
+
     addToDo(toDo) {
         this.tasks.push(toDo);
+        localStorage.setItem(`${this.name}`, JSON.stringify(this));
     }
 
     removeToDo(toDo) {
         this.tasks.splice(this.tasks.indexOf(toDo), 1);
+        localStorage.setItem(`${this.name}`, JSON.stringify(this));
     }
 
     display(location) {

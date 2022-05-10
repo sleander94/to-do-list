@@ -55,7 +55,8 @@ const page = (() => {
                 sidebar.removeChild(inputContainer);
                 const activeList = document.querySelector('.active');
                 activeList.classList.toggle('active');
-                const newList = new List(listName.value);
+                const newList = new List(listName.value, []);
+                localStorage.setItem(`${newList.name}`, JSON.stringify(newList));
                 listArray.push(newList);
                 newList.addToPage(sidebar, content);
                 newList.display(content);
@@ -183,19 +184,32 @@ const page = (() => {
         document.body.appendChild(toDoContainer);
     }
 
+    // Create default list if local storage is empty
+    if (localStorage.length < 1) {
+        const tasks = new List('Tasks');
+        listArray.push(tasks);
+        tasks.addToPage(sidebar, content);
+    }
 
+    // Loop through lists in local storage and populate listArray on page load
+    function getListsFromStorage() {
+        for (let i=0; i < localStorage.length; i++ ) {
+            const listName = localStorage.key(i);
+            const listData = JSON.parse(localStorage.getItem(listName));
+            console.log(listData.tasks)
+            const list = new List(listData.name, listData.tasks); 
+            console.log(list.tasks);
+            console.log(localStorage.length)
+            listArray.push(list);
+            list.addToPage(sidebar, content);
+            if (i == 0) {
+                list.display(content);
+            }
+        } 
+    }
+    
 
-    // Default list 'Tasks'
-    const tasks = new List('Tasks');
-    listArray.push(tasks);
-    tasks.addToPage(sidebar, content);
-
-    const test = new ToDo('test', '12/7', 'normal');
-    const laundry = new ToDo('do laundry', 'today', 'high');
-    tasks.addToDo(laundry);
-    tasks.addToDo(test);
-    tasks.display(content);
-    // Add new list button to sidebar
+    getListsFromStorage()
     makeNewListButton()
     makeAddToDoButton()
 })();
