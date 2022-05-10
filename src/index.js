@@ -100,13 +100,54 @@ const page = (() => {
         toDoContainer.id = 'todo-form';
 
         const toDoName = document.createElement('input');
+        toDoName.placeholder = 'What do you need to-do?';
         toDoContainer.appendChild(toDoName);
 
         const toDoDate = document.createElement('input');
         toDoDate.type = 'date';
         toDoContainer.appendChild(toDoDate);
 
-        
+        const priorityContainer = document.createElement('div');
+        const priorityTitle = document.createElement('p');
+        priorityTitle.innerText = 'Priority';
+        priorityContainer.appendChild(priorityTitle);
+
+        const lowPriority = document.createElement('input');
+        lowPriority.type = 'radio';
+        lowPriority.name = 'priority';
+        lowPriority.value = 'low';
+        lowPriority.id = 'priorityChoice1';
+        const lowLabel = document.createElement('label');
+        lowLabel.for = 'priorityChoice1';
+        lowLabel.textContent = 'Low';
+        priorityContainer.appendChild(lowPriority);
+        priorityContainer.appendChild(lowLabel);
+
+        const normalPriority = document.createElement('input');
+        normalPriority.type = 'radio';
+        normalPriority.name = 'priority';
+        normalPriority.value = 'normal';
+        normalPriority.id = 'priorityChoice2';
+        normalPriority.checked = true;
+        const normalLabel = document.createElement('label');
+        normalLabel.for = 'priorityChoice2';
+        normalLabel.textContent = 'Normal';
+        priorityContainer.appendChild(normalPriority);
+        priorityContainer.appendChild(normalLabel);
+
+        const highPriority = document.createElement('input');
+        highPriority.type = 'radio';
+        highPriority.name = 'priority';
+        highPriority.value = 'high';
+        highPriority.id = 'priorityChoice3';
+        const highLabel = document.createElement('label');
+        highLabel.for = 'priorityChoice3';
+        highLabel.textContent = 'High';
+        priorityContainer.appendChild(highPriority);
+        priorityContainer.appendChild(highLabel);
+
+        toDoContainer.appendChild(priorityContainer);
+
 
         const addButton = document.createElement('button');
         addButton.type = 'button';
@@ -116,11 +157,12 @@ const page = (() => {
             if (toDoName.value == '') {
                 alert('Enter a name for the task');
             } else { 
+                const toDoPriority = document.querySelector('input[name="priority"]:checked');
                 document.body.removeChild(toDoContainer);
                 const activeButton = document.querySelector('.active');
                 listArray.forEach(list => {
                     if (activeButton.textContent == list.name) {
-                        const newToDo = new ToDo(toDoName.value, toDoDate.value, 'normal');
+                        const newToDo = new ToDo(toDoName.value, toDoDate.value, toDoPriority.value);
                         list.addToDo(newToDo);
                         list.display(content);
                     }
