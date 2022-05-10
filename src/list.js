@@ -5,27 +5,57 @@ export class List {
     }
 
     addToPage(buttonArea, taskArea) {
-        const button = document.createElement('button');
-        button.type = 'button';
+        const listContainer = document.createElement('div');
+        listContainer.classList.toggle('list-container');
+        const listButton = document.createElement('button');
+        listButton.type = 'button';
         if (!document.querySelector('.active')) {
-            button.classList.toggle('active');
+            listButton.classList.toggle('active');
         }
-        button.textContent = this.name;
-        button.addEventListener('click', () => {
-            if (button.classList.contains('active')) {
+        listButton.textContent = this.name;
+        listButton.addEventListener('click', () => {
+            if (listButton.classList.contains('active')) {
                 return;
             } else {
                 const currentActiveButton = document.querySelector('.active');
                 currentActiveButton.classList.toggle('active');
-                button.classList.toggle('active');
+                listButton.classList.toggle('active');
                 this.display(taskArea);
             }
         });
-        buttonArea.appendChild(button);
-    }
+        listContainer.appendChild(listButton);
+        const removeListButton = document.createElement('button');
+        removeListButton.type = 'button';
+        removeListButton.classList.toggle('remove-list-button');
+        removeListButton.textContent = 'X'
+        removeListButton.addEventListener('click', () => {
+            const confirmationContainer = document.createElement('div');
+            const confirmationLabel = document.createElement('p');
+            confirmationLabel.innerText = `Delete ${this.name}?`;
+            confirmationContainer.appendChild(confirmationLabel);
+            const cancelButton = document.createElement('button');
+            cancelButton.type = 'button';
+            cancelButton.classList.toggle('cancel');
+            cancelButton.textContent = 'Cancel';
+            cancelButton.addEventListener('click', () => {
+                confirmationContainer.innerHTML = '';
+                document.body.removeChild(confirmationContainer);
+            });
+            confirmationContainer.appendChild(cancelButton);
+            const confirmButton = document.createElement('button');
+            confirmButton.type = 'button';
+            confirmButton.classList.toggle('confirm');
+            confirmButton.textContent = 'Confirm';
+            confirmButton.addEventListener('click', () => {
+                buttonArea.removeChild(listContainer);
+                localStorage.removeItem(`${this.name}`);
+            });
+            confirmationContainer.appendChild(confirmButton);
+            document.body.appendChild(confirmationContainer);
+        });
+        listContainer.appendChild(removeListButton);
 
-    testFunction() {
-        console.log('success!');
+        buttonArea.appendChild(listContainer);
     }
 
     addToDo(toDo) {
