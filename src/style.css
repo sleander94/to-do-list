@@ -40,6 +40,21 @@ body {
 
 
 /* Content and ToDos */
+#tasks-container {
+    display: grid;
+    grid: 1fr / 4fr 1fr 1fr 1fr 1fr;
+
+}
+
+.task-div {
+    grid-column: 1 / 6;
+    display: grid;
+    grid: 1fr / 4fr 1fr 1fr 1fr 1fr;
+}
+
+.complete > span {
+    text-decoration: line-through;
+}
 
 .todo-button {
     position: absolute;
@@ -60,4 +75,12 @@ body {
 .todo-button span {
     border: none;
     padding-bottom: 4px;
+}
+
+#todo-form {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    display: grid;
 }

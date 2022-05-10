@@ -93,13 +93,20 @@ const page = (() => {
 
     // Input for new todo / add & cancel buttons
     function newToDoInput() {
-        const inputContainer = document.createElement('div');
+        if (document.getElementById('todo-form')) {
+            return;
+        }
+        const toDoContainer = document.createElement('div');
+        toDoContainer.id = 'todo-form';
 
         const toDoName = document.createElement('input');
-        inputContainer.appendChild(toDoName);
+        toDoContainer.appendChild(toDoName);
 
         const toDoDate = document.createElement('input');
-        inputContainer.appendChild(toDoDate);
+        toDoDate.type = 'date';
+        toDoContainer.appendChild(toDoDate);
+
+        
 
         const addButton = document.createElement('button');
         addButton.type = 'button';
@@ -109,7 +116,7 @@ const page = (() => {
             if (toDoName.value == '') {
                 alert('Enter a name for the task');
             } else { 
-                content.removeChild(inputContainer);
+                document.body.removeChild(toDoContainer);
                 const activeButton = document.querySelector('.active');
                 listArray.forEach(list => {
                     if (activeButton.textContent == list.name) {
@@ -120,18 +127,18 @@ const page = (() => {
                 });
             }
         });
-        inputContainer.appendChild(addButton);
+        toDoContainer.appendChild(addButton);
 
         const cancelButton = document.createElement('button');
         cancelButton.type = 'button'
         cancelButton.classList.toggle('cancel');
         cancelButton.textContent = 'Cancel'
         cancelButton.addEventListener('click', () => {
-            content.removeChild(inputContainer);
+            document.body.removeChild(toDoContainer);
         });
-        inputContainer.appendChild(cancelButton);
+        toDoContainer.appendChild(cancelButton);
 
-        content.appendChild(inputContainer);
+        document.body.appendChild(toDoContainer);
     }
 
 
