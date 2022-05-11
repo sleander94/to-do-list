@@ -43,12 +43,19 @@ const page = (() => {
         const inputContainer = document.createElement('form');
 
         const listName = document.createElement('input');
+        listName.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('add').click();
+            }
+        });
         inputContainer.appendChild(listName);
 
 
         const addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.classList.toggle('add');
+        addButton.id = 'add';
         addButton.textContent = 'Add';
         addButton.addEventListener('click', () => {
             if (listName.value == '') {
