@@ -3,7 +3,6 @@
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
-    border: 1px solid black;
 }
 
 body {
@@ -26,15 +25,148 @@ body {
     color: white;
 }
 
+
+
 .sidebar {
     grid-area: 2 / 1 / 3 / 2;
-    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 24px;
+    width: 250px;
     background-color: rgb(215, 212, 212);
 }
 
-.active {
-    background-color: gray;
+.list-container {
+    display: flex;
+    gap: 12px;
+    overflow-wrap: break-word;
 }
+
+.sidebar .list-container .active {
+    background-color: rgba(75, 224, 30, 0.435);   
+    border-radius: 8px;
+    
+}
+
+.sidebar .list-container .active:hover {
+    text-decoration: none;
+}
+
+.sidebar .list-container button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sidebar .list-container button {
+    background-color: transparent;
+    width: 175px;
+    padding: 8px 20px 8px 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border: none;
+}
+
+.sidebar .list-container .remove-list-button {
+    align-self: center;
+    height: 22px;
+    width: 22px;
+    border-radius: 18px;
+    padding: 8px;
+    font-size: .8rem;
+    border: 1px solid black;
+}
+
+.remove-list-button span {
+    position: relative;
+    bottom: 5.4px;
+    right: 2.3px;
+}
+
+.sidebar .list-container .remove-list-button:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.confirmation-container {
+    z-index: 2;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    top: 50%;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 250px; 
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 12px;
+    overflow-wrap: break-word;
+    background-color: rgb(215, 212, 212);
+}
+
+.confirmation-container p {
+    grid-area: 1 / 1 / 2 / 3;
+    text-align: center;
+    font-weight: 500;
+}
+
+.confirmation-container button {
+    padding: 8px;
+    align-self: center;
+}
+
+.sidebar .new-list {
+    background-color: rgb(83, 221, 41);
+    width: 175px;
+    padding: 6px 35px 6px 35px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.sidebar .new-list:hover, form .add:hover, .confirm:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: rgba(98, 254, 51, 0.455);
+}
+
+.sidebar form, .confirmation-container {
+    display: grid;
+    grid: 1fr 1fr / 1fr 1fr;
+    gap: 8px;
+}
+
+.sidebar input {
+    grid-area: 1 / 1 / 2 / 3;
+    height: 1.5rem;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid black; 
+    background-color: rgba(75, 224, 30, 0.253);  
+}
+
+.sidebar form button, .confirmation-container button {
+    font-weight: 500;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+form .add {
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: rgb(83, 221, 41);
+}
+
+.cancel:hover  {
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: rgba(249, 111, 89, 0.455);
+}
+
+
 
 
 

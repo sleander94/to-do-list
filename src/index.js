@@ -40,10 +40,11 @@ const page = (() => {
 
     // Input for new list / add & cancel buttons
     function newListInput() {
-        const inputContainer = document.createElement('div');
+        const inputContainer = document.createElement('form');
 
         const listName = document.createElement('input');
         inputContainer.appendChild(listName);
+
 
         const addButton = document.createElement('button');
         addButton.type = 'button';
@@ -77,6 +78,7 @@ const page = (() => {
         inputContainer.appendChild(cancelButton);
 
         sidebar.appendChild(inputContainer);
+        listName.focus();
     }
 
     // Add todo button
@@ -193,7 +195,7 @@ const page = (() => {
  
     // Loop through lists in local storage and populate listArray on page load
     function getListsFromStorage() {
-        for (let i=localStorage.length -1; i >= 0; i-- ) {
+        for (let i=localStorage.length - 1; i >= 0; i-- ) {
             const listName = localStorage.key(i);
             const listData = JSON.parse(localStorage.getItem(listName));
             const list = new List(listData.name, listData.tasks); 

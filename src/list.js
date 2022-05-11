@@ -24,43 +24,50 @@ export class List {
             }
         });
         listContainer.appendChild(listButton);
-        const removeListButton = document.createElement('button');
-        removeListButton.type = 'button';
-        removeListButton.classList.toggle('remove-list-button');
-        const removeSpan = document.createElement('span');
-        removeSpan.textContent = 'X';
-        removeListButton.appendChild(removeSpan);
-        removeListButton.addEventListener('click', () => {
-            if (!document.querySelector('.confirmation-container')) {
-            const confirmationContainer = document.createElement('div');
-            confirmationContainer.classList.toggle('confirmation-container')
-            const confirmationLabel = document.createElement('p');
-            confirmationLabel.innerText = `Delete ${this.name}?`;
-            confirmationContainer.appendChild(confirmationLabel);
-            const cancelButton = document.createElement('button');
-            cancelButton.type = 'button';
-            cancelButton.classList.toggle('cancel');
-            cancelButton.textContent = 'Cancel';
-            cancelButton.addEventListener('click', () => {
-                confirmationContainer.innerHTML = '';
-                document.body.removeChild(confirmationContainer);
-            });
-            confirmationContainer.appendChild(cancelButton);
-            const confirmButton = document.createElement('button');
-            confirmButton.type = 'button';
-            confirmButton.classList.toggle('confirm');
-            confirmButton.textContent = 'Confirm';
-            confirmButton.addEventListener('click', () => {
-                buttonArea.removeChild(listContainer);
-                localStorage.removeItem(`${this.name}`);
-                confirmationContainer.innerHTML = '';
-                document.body.removeChild(confirmationContainer);
-            });
-            confirmationContainer.appendChild(confirmButton);
-            document.body.appendChild(confirmationContainer);
-        }
+        if (this.name !== 'Tasks') {
+            const removeListButton = document.createElement('button');
+            removeListButton.type = 'button';
+            removeListButton.classList.toggle('remove-list-button');
+            const removeSpan = document.createElement('span');
+            removeSpan.textContent = 'X';
+            removeListButton.appendChild(removeSpan);
+            removeListButton.addEventListener('click', () => {
+                if (!document.querySelector('.confirmation-container')) {
+                const confirmationContainer = document.createElement('div');
+                confirmationContainer.classList.toggle('confirmation-container')
+                const confirmationLabel = document.createElement('p');
+                confirmationLabel.innerText = `Delete ${this.name}?`;
+                confirmationContainer.appendChild(confirmationLabel);
+                const cancelButton = document.createElement('button');
+                cancelButton.type = 'button';
+                cancelButton.classList.toggle('cancel');
+                cancelButton.textContent = 'Cancel';
+                cancelButton.addEventListener('click', () => {
+                    confirmationContainer.innerHTML = '';
+                    document.body.removeChild(confirmationContainer);
+                });
+                confirmationContainer.appendChild(cancelButton);
+                const confirmButton = document.createElement('button');
+                confirmButton.type = 'button';
+                confirmButton.classList.toggle('confirm');
+                confirmButton.textContent = 'Confirm';
+                confirmButton.addEventListener('click', () => {
+                    if (listButton.classList.contains('active')) {
+                        const newActive = document.querySelector('.list-container');
+                        newActive.classList.toggle('active');
+                    } 
+                    buttonArea.removeChild(listContainer);
+                    localStorage.removeItem(`${this.name}`);
+                    confirmationContainer.innerHTML = '';
+                    document.body.removeChild(confirmationContainer);
+                });
+                confirmationContainer.appendChild(confirmButton);
+              document.body.appendChild(confirmationContainer);
+            }
+            
         });
         listContainer.appendChild(removeListButton);
+        }
         buttonArea.appendChild(listContainer);
     }
 
