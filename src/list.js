@@ -27,9 +27,13 @@ export class List {
         const removeListButton = document.createElement('button');
         removeListButton.type = 'button';
         removeListButton.classList.toggle('remove-list-button');
-        removeListButton.textContent = 'X'
+        const removeSpan = document.createElement('span');
+        removeSpan.textContent = 'X';
+        removeListButton.appendChild(removeSpan);
         removeListButton.addEventListener('click', () => {
+            if (!document.querySelector('.confirmation-container')) {
             const confirmationContainer = document.createElement('div');
+            confirmationContainer.classList.toggle('confirmation-container')
             const confirmationLabel = document.createElement('p');
             confirmationLabel.innerText = `Delete ${this.name}?`;
             confirmationContainer.appendChild(confirmationLabel);
@@ -49,12 +53,14 @@ export class List {
             confirmButton.addEventListener('click', () => {
                 buttonArea.removeChild(listContainer);
                 localStorage.removeItem(`${this.name}`);
+                confirmationContainer.innerHTML = '';
+                document.body.removeChild(confirmationContainer);
             });
             confirmationContainer.appendChild(confirmButton);
             document.body.appendChild(confirmationContainer);
+        }
         });
         listContainer.appendChild(removeListButton);
-
         buttonArea.appendChild(listContainer);
     }
 
@@ -74,7 +80,7 @@ export class List {
         tasksContainer.id = 'tasks-container';
 
         const nameLabel = document.createElement('div');
-        nameLabel.textContent = 'Name';
+        nameLabel.textContent = 'To-Do';
         nameLabel.classList.toggle('name-label');
         tasksContainer.appendChild(nameLabel);
         const dateLabel = document.createElement('div');
