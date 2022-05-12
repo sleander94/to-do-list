@@ -93,9 +93,7 @@ const page = (() => {
         const addToDoButton = document.createElement('button');
         addToDoButton.type = 'button';
         addToDoButton.classList.toggle('todo-button');
-        const addToDoButtonSpan = document.createElement('span');
-        addToDoButtonSpan.textContent = '+';
-        addToDoButton.appendChild(addToDoButtonSpan);
+        addToDoButton.innerText = '+';
         addToDoButton.addEventListener('click', () => {
             newToDoInput();
         });
@@ -110,15 +108,17 @@ const page = (() => {
         const toDoContainer = document.createElement('div');
         toDoContainer.id = 'todo-form';
 
+        const title = document.createElement('h2');
+        title.textContent = 'Add To-Do';
+        toDoContainer.appendChild(title);
+
         const toDoName = document.createElement('input');
+        toDoName.type = 'text';
         toDoName.placeholder = 'What do you need to-do?';
         toDoContainer.appendChild(toDoName);
 
-        const toDoDate = document.createElement('input');
-        toDoDate.type = 'date';
-        toDoContainer.appendChild(toDoDate);
-
         const priorityContainer = document.createElement('div');
+        priorityContainer.classList.toggle('priority-container');
         const priorityTitle = document.createElement('p');
         priorityTitle.innerText = 'Priority';
         priorityContainer.appendChild(priorityTitle);
@@ -126,7 +126,7 @@ const page = (() => {
         const lowPriority = document.createElement('input');
         lowPriority.type = 'radio';
         lowPriority.name = 'priority';
-        lowPriority.value = 'low';
+        lowPriority.value = 'Low';
         lowPriority.id = 'priorityChoice1';
         const lowLabel = document.createElement('label');
         lowLabel.for = 'priorityChoice1';
@@ -137,7 +137,7 @@ const page = (() => {
         const normalPriority = document.createElement('input');
         normalPriority.type = 'radio';
         normalPriority.name = 'priority';
-        normalPriority.value = 'normal';
+        normalPriority.value = 'Normal';
         normalPriority.id = 'priorityChoice2';
         normalPriority.checked = true;
         const normalLabel = document.createElement('label');
@@ -149,7 +149,7 @@ const page = (() => {
         const highPriority = document.createElement('input');
         highPriority.type = 'radio';
         highPriority.name = 'priority';
-        highPriority.value = 'high';
+        highPriority.value = 'High';
         highPriority.id = 'priorityChoice3';
         const highLabel = document.createElement('label');
         highLabel.for = 'priorityChoice3';
@@ -159,6 +159,9 @@ const page = (() => {
 
         toDoContainer.appendChild(priorityContainer);
 
+        const toDoDate = document.createElement('input');
+        toDoDate.type = 'date';
+        toDoContainer.appendChild(toDoDate);
 
         const addButton = document.createElement('button');
         addButton.type = 'button';
@@ -192,6 +195,7 @@ const page = (() => {
         toDoContainer.appendChild(cancelButton);
 
         document.body.appendChild(toDoContainer);
+        toDoName.focus();
     }
 
     // Create default list and store in local storage if local storage is empty

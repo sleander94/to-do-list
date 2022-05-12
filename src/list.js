@@ -88,67 +88,81 @@ export class List {
 
         const nameLabel = document.createElement('div');
         nameLabel.textContent = 'To-Do';
-        nameLabel.classList.toggle('name-label');
+        nameLabel.classList.toggle('column-label');
+        nameLabel.classList.toggle('name');
         tasksContainer.appendChild(nameLabel);
-        const dateLabel = document.createElement('div');
-        dateLabel.textContent = 'Due Date';
-        dateLabel.classList.toggle('date-label');
-        tasksContainer.appendChild(dateLabel);
         const priorityLabel = document.createElement('div');
         priorityLabel.textContent = 'Priority';
-        priorityLabel.classList.toggle('priority-label');
+        priorityLabel.classList.toggle('column-label');
         tasksContainer.appendChild(priorityLabel);
+        const dateLabel = document.createElement('div');
+        dateLabel.textContent = 'Date';
+        dateLabel.classList.toggle('column-label');
+        tasksContainer.appendChild(dateLabel);
         const completeLabel = document.createElement('div');
         completeLabel.textContent = 'Complete';
-        completeLabel.classList.toggle('complete-label');
+        completeLabel.classList.toggle('column-label');
         tasksContainer.appendChild(completeLabel);
         const removeLabel = document.createElement('div');
         removeLabel.textContent = 'Remove';
-        removeLabel.classList.toggle('remove-label');
+        removeLabel.classList.toggle('column-label');
         tasksContainer.appendChild(removeLabel);
 
         this.tasks.forEach(task => {
-            const taskDiv = document.createElement('div');
-            taskDiv.classList.toggle('task-div');
-
-            const name = document.createElement('span');
+            const name = document.createElement('div');
+            name.classList.toggle('name');
             name.textContent = task.name;
-            taskDiv.appendChild(name);
+            tasksContainer.appendChild(name);  
 
-            const date = document.createElement('span');
-            date.textContent = task.date
-            taskDiv.appendChild(date);    
-
-            const priority = document.createElement('span');
+            const priority = document.createElement('div');
+            priority.classList.toggle('priority');
             priority.textContent = task.priority
-            taskDiv.appendChild(priority);
+            tasksContainer.appendChild(priority);
 
-            if (task.priority == 'low') {
-                taskDiv.classList.toggle('low');
-            } else if (task.priority == 'normal') {
-                taskDiv.classList.toggle('normal');
-            } else if (task.priority == 'high') {
-                taskDiv.classList.toggle('high');
+            if (task.priority == 'Low') {
+                priority.classList.toggle('low');
+            } else if (task.priority == 'Normal') {
+                priority.classList.toggle('normal');
+            } else if (task.priority == 'High') {
+                priority.classList.toggle('high');
             }
 
+            const date = document.createElement('div');
+            date.classList.toggle('date');
+            date.textContent = task.date
+            tasksContainer.appendChild(date);  
+
+            const completeCheckBoxContainer = document.createElement('div');
+            completeCheckBoxContainer.classList.toggle('container');
             const completeCheckBox = document.createElement('input');
+            completeCheckBox.classList.toggle('checkbox');
             completeCheckBox.type = 'checkbox';
             completeCheckBox.addEventListener('change', () => {
-                taskDiv.classList.toggle('complete');
+                name.classList.toggle('complete');
+                date.classList.toggle('complete');
+                priority.classList.toggle('complete');
             });
-            taskDiv.appendChild(completeCheckBox);
+            completeCheckBoxContainer.appendChild(completeCheckBox);
+            tasksContainer.appendChild(completeCheckBoxContainer);
 
+            const removeButtonContainer = document.createElement('div');
+            removeButtonContainer.classList.toggle('container');
             const removeButton = document.createElement('button');
+            removeButton.classList.toggle('remove');
             removeButton.type = 'button';
-            removeButton.innerHTML = 'Remove';
+            const removeButtonSpan = document.createElement('span');
+            removeButtonSpan.innerHTML = 'X';
+            removeButton.appendChild(removeButtonSpan);
             removeButton.addEventListener('click', () => {
                 this.removeToDo(task);
-                tasksContainer.removeChild(taskDiv);
+                tasksContainer.removeChild(name);
+                tasksContainer.removeChild(date);
+                tasksContainer.removeChild(priority);
+                tasksContainer.removeChild(completeCheckBoxContainer);
+                tasksContainer.removeChild(removeButtonContainer);
             });
-            taskDiv.appendChild(removeButton);
-
-
-            tasksContainer.appendChild(taskDiv);
+            removeButtonContainer.appendChild(removeButton);
+            tasksContainer.appendChild(removeButtonContainer);
         });
         location.appendChild(tasksContainer);
     }

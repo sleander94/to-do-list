@@ -7,7 +7,7 @@
 
 body {
     display: grid;
-    grid: 1fr 6fr / 1fr 4fr;
+    grid: 1fr 6fr / 250px 1fr;
     height: 100vh;
 }
 
@@ -81,11 +81,11 @@ body {
 .remove-list-button span {
     position: relative;
     bottom: 5.4px;
-    right: 2.3px;
+    right: 2px;
 }
 
 .sidebar .list-container .remove-list-button:hover {
-    background-color: red;
+    background-color: rgba(249, 111, 89, 0.455);
     color: white;
     cursor: pointer;
     text-decoration: none;
@@ -119,7 +119,7 @@ body {
 }
 
 .sidebar .new-list {
-    background-color: rgb(83, 221, 41);
+    background-color: rgba(76, 218, 33, 0.805);
     width: 175px;
     padding: 6px 35px 6px 35px;
     border: 1px solid black;
@@ -128,10 +128,10 @@ body {
     font-weight: 500;
 }
 
-.sidebar .new-list:hover, form .add:hover, .confirm:hover {
+.sidebar .new-list:hover, form .add:hover {
     text-decoration: underline;
     cursor: pointer;
-    background-color: rgba(98, 254, 51, 0.455);
+    background-color: rgba(75, 224, 30, 0.435);   
 }
 
 .sidebar form, .confirmation-container {
@@ -160,32 +160,102 @@ form .add {
     background-color: rgb(83, 221, 41);
 }
 
-.cancel:hover  {
+.confirm:hover  {
     text-decoration: underline;
-    cursor: pointer;
+    cursor: pointer; 
     background-color: rgba(249, 111, 89, 0.455);
 }
 
-
-
-
+.cancel:hover {
+    text-decoration: underline;
+    cursor: pointer;   
+}
 
 
 /* Content and ToDos */
 #tasks-container {
     display: grid;
     grid: 1fr / 4fr 1fr 1fr 1fr 1fr;
-
+    row-gap: 12px;
+    text-align: center;
 }
 
-.task-div {
-    grid-column: 1 / 6;
-    display: grid;
-    grid: 1fr / 4fr 1fr 1fr 1fr 1fr;
+#tasks-container * {
+    font-weight: 400;
 }
 
-.complete > span {
+#tasks-container .name {
+    text-align: left;
+}
+
+#tasks-container .column-label {
+    background-color: rgb(176, 173, 173);
+    font-size: 1.2rem;
+    font-weight: 500;
+    min-width: 100px;
+    border-right: 1px solid black;
+}
+
+#tasks-container div {
+    min-width: 100px;
+    padding: 8px;
+}
+
+.priority {
+    text-align: center;
+}
+
+.low {
+    background-color: rgba(75, 224, 30, 0.435);   
+    border-radius: 8px;
+}
+
+.normal {
+    background-color: rgba(234, 241, 25, 0.435);   
+    border-radius: 8px;
+}
+
+.high {
+    background-color: rgba(249, 111, 89, 0.455);  
+    border-radius: 8px;
+}
+
+.complete {
     text-decoration: line-through;
+    background-color: white;
+}
+
+#tasks-container .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox {
+    transform: scale(1.5);
+}
+
+.remove {
+    padding: 4px;
+    height: 22px;
+    width: 22px;
+    border-radius: 18px;
+    padding: 8px;
+    font-size: .8rem;
+    border: 1px solid black;
+}
+
+.remove span {
+    position: relative;
+    bottom: 5.3px;
+    right: 2px;
+}
+
+.remove:hover {
+    background-color: rgba(249, 111, 89, 0.455);
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .todo-button {
@@ -195,24 +265,112 @@ form .add {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    padding: 20px;
+    width: 4rem;
+    height: 4rem;
+    padding-bottom: 4px;
     border-radius: 50%;
     font-size: 3rem;
     text-align: center;
     text-decoration: none;
+    color: rgb(56, 182, 18);
+    border: 1px solid rgb(124, 123, 123);
+    box-shadow: 0px 0px 8px rgb(0, 0, 0);
 }
 
-.todo-button span {
-    border: none;
-    padding-bottom: 4px;
+.todo-button:hover {
+    color: rgba(75, 224, 30);
+    box-shadow: 0px 0px 20px black;
 }
+
 
 #todo-form {
-    position: absolute;
     z-index: 1;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
     top: 50%;
-    left: 50%;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 250px; 
+    height: 260px;
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 12px;
+    gap: 12px;
+    overflow-wrap: break-word;
+    background-color: rgb(215, 212, 212);
     display: grid;
+    grid: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+#todo-form h2 {
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+#todo-form input[type = 'text'] {
+    grid-area: 2 / 1 / 3 / 4;
+    height: 1.5rem;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid black; 
+    background-color: rgba(75, 224, 30, 0.253);  
+}
+
+#todo-form input[type = 'date'] {
+    grid-area: 4 / 1 / 5 / 3;
+    height: 2rem;
+    border-radius: 6px;
+    border: 1px solid black;
+    padding: 6px;
+}
+
+.priority-container {
+    grid-area: 3 / 1 / 4 / 3;
+    display: grid;
+    grid: 1fr 1fr 1fr/ 1fr 1fr 1fr;
+    column-gap: 12px;
+    row-gap: 6px;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+.priority-container p {
+    grid-area: 1 / 1 / 2 / 4;
+    font-weight: 500;
+}
+
+.priority-container label {
+    grid-row: 3 / 4;
+}
+
+
+#todo-form button {
+    padding: 8px 24px 8px 24px;
+    border-radius: 8px;
+    border: 1px solid black;
+    width: 100px;
+}
+
+#todo-form .add {
+    grid-area: 5 / 2 / 6 / 3;
+}
+
+#todo-form .cancel {
+    grid-area: 5 / 1 / 6 / 2;
+}
+
+#todo-form .add:hover {
+    background-color: rgba(75, 224, 30, 0.435);  
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#todo-form .cancel:hover {
+    background-color: rgba(249, 111, 89, 0.455);
+    cursor: pointer;
+    text-decoration: underline;
 }
