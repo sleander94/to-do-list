@@ -4,6 +4,7 @@ import {ToDo} from './todo.js'
 
 
 const page = (() => {
+    
     // Header
     const header = document.createElement('div');
     header.classList.toggle('header')
@@ -109,12 +110,12 @@ const page = (() => {
         toDoContainer.id = 'todo-form';
 
         const title = document.createElement('h2');
-        title.textContent = 'Add To-Do';
+        title.textContent = 'New Task';
         toDoContainer.appendChild(title);
 
         const toDoName = document.createElement('input');
         toDoName.type = 'text';
-        toDoName.placeholder = 'What do you need to-do?';
+        toDoName.placeholder = 'Task name';
         toDoContainer.appendChild(toDoName);
 
         const priorityContainer = document.createElement('div');
