@@ -1,21 +1,8 @@
 import './style.css';
 import { List } from './list.js';
 import { ToDo } from './todo.js';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, updateDoc } from 'firebase/firestore';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyABg2iVNLRBHVmNvqPklZf-WaG1hAHdgGQ',
-  authDomain: 'to-do-list-d5cf0.firebaseapp.com',
-  projectId: 'to-do-list-d5cf0',
-  storageBucket: 'to-do-list-d5cf0.appspot.com',
-  messagingSenderId: '696068432314',
-  appId: '1:696068432314:web:84dc837dea5ce50758fd83',
-  measurementId: 'G-RTPQ1Q08NJ',
-};
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore();
+import firestore from './firebase.js';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 
 const testDoc = doc(firestore, 'testdoc/2022-10-6');
 function writeToTest() {
@@ -89,8 +76,8 @@ const page = (() => {
         const activeList = document.querySelector('.active');
         activeList.classList.toggle('active');
         const newList = new List(listName.value, []);
-        // Add newList to firestore
 
+        // Add newList to firestore
         let currList = doc(firestore, `testUser/${newList.name}`);
         setDoc(currList, {});
 
