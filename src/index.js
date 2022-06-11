@@ -92,7 +92,10 @@ const page = (() => {
 
         // Add newList to firestore
         const addNewList = async () => {
-          await setDoc(doc(firestore, `testUser/${newList.name}`), {});
+          await setDoc(doc(firestore, `testUser/${newList.name}`), {
+            timestamp: new Date(),
+            tasks: {},
+          });
         };
         addNewList();
         localStorage.setItem(`${newList.name}`, JSON.stringify(newList));
@@ -219,11 +222,13 @@ const page = (() => {
               await updateDoc(
                 doc(firestore, `testUser/${activeButton.textContent}`),
                 {
-                  [newToDo.name]: {
-                    name: newToDo.name,
-                    date: newToDo.date,
-                    priority: newToDo.priority,
-                    complete: false,
+                  tasks: {
+                    [newToDo.name]: {
+                      name: newToDo.name,
+                      date: newToDo.date,
+                      priority: newToDo.priority,
+                      complete: false,
+                    },
                   },
                 }
               );
@@ -252,7 +257,10 @@ const page = (() => {
 
   // Create default list in firestore if none exist
   const setTasks = async () => {
-    setDoc(doc(firestore, `testUser/Tasks`), {});
+    setDoc(doc(firestore, `testUser/Tasks`), {
+      timestamp: new Date(),
+      tasks: {},
+    });
   };
 
   const defaultList = async () => {
@@ -273,7 +281,8 @@ const page = (() => {
     const q = query(collection(firestore, 'testUser'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      const list = new List(doc.id, Object.values(doc.data()));
+      console.log(Object.values(doc.data().tasks));
+      const list = new List(doc.id, Object.values(doc.data().tasks));
       listArray.push(list);
       list.addToPage(listsCont, content);
       if (doc.id === 'Tasks') {
