@@ -93,7 +93,7 @@ const page = (() => {
         // Add newList to firestore
         const addNewList = async () => {
           await setDoc(doc(firestore, `testUser/${newList.name}`), {
-            timestamp: new Date(),
+            timestamp: new Date().getTime(),
             tasks: {},
           });
         };
@@ -258,7 +258,7 @@ const page = (() => {
   // Create default list in firestore if none exist
   const setTasks = async () => {
     setDoc(doc(firestore, `testUser/Tasks`), {
-      timestamp: new Date(),
+      timestamp: new Date().getTime(),
       tasks: {},
     });
   };
@@ -281,7 +281,6 @@ const page = (() => {
     const q = query(collection(firestore, 'testUser'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(Object.values(doc.data().tasks));
       const list = new List(doc.id, Object.values(doc.data().tasks));
       listArray.push(list);
       list.addToPage(listsCont, content);
