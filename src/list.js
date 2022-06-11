@@ -65,14 +65,13 @@ export class List {
               listArray[0].display(taskArea);
             }
             buttonArea.removeChild(listContainer);
-            // Delete list from firestore
 
+            // Delete list from firestore
             const deleteList = async () => {
               deleteDoc(doc(firestore, `testUser/${this.name}`));
             };
             deleteList();
 
-            localStorage.removeItem(`${this.name}`);
             confirmationContainer.innerHTML = '';
             document.body.removeChild(confirmationContainer);
           });
@@ -87,12 +86,10 @@ export class List {
 
   addToDo(toDo) {
     this.tasks.push(toDo);
-    localStorage.setItem(`${this.name}`, JSON.stringify(this));
   }
 
   removeToDo(toDo) {
     this.tasks.splice(this.tasks.indexOf(toDo), 1);
-    localStorage.setItem(`${this.name}`, JSON.stringify(this));
   }
 
   display(location) {

@@ -13,17 +13,6 @@ import {
   orderBy,
 } from 'firebase/firestore';
 
-const testDoc = doc(firestore, 'testdoc/2022-10-6');
-function writeToTest() {
-  const docData = {
-    description: 'A firestore test',
-    price: '$69.99',
-    success: 'Yes!',
-  };
-  setDoc(testDoc, docData);
-}
-writeToTest();
-
 // Empty array to store lists
 let listArray = [];
 
@@ -99,7 +88,6 @@ const page = (() => {
           });
         };
         addNewList();
-        localStorage.setItem(`${newList.name}`, JSON.stringify(newList));
         listArray.push(newList);
         newList.addToPage(listsCont, content);
         newList.display(content);
@@ -226,7 +214,7 @@ const page = (() => {
                   [`tasks.${newToDo.name}`]: {
                     name: newToDo.name,
                     date: newToDo.date,
-                    priority: newToDo.priority,
+                    priority: toDoPriority.value,
                     complete: false,
                   },
                 }
@@ -267,8 +255,6 @@ const page = (() => {
     if (!tasksDoc.exists()) {
       setTasks();
       getLists();
-    } else {
-      console.log('Tasks exists');
     }
   };
   defaultList();
