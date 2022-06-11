@@ -15,6 +15,9 @@ function writeToTest() {
 }
 writeToTest();
 
+// Empty array to store lists
+let listArray = [];
+
 const page = (() => {
   // Header
   const header = document.createElement('div');
@@ -33,9 +36,6 @@ const page = (() => {
   const content = document.createElement('div');
   content.classList.toggle('content');
   document.body.appendChild(content);
-
-  // Empty array to store lists
-  let listArray = [];
 
   // Sidebar button that generates new list input on click
   function makeNewListButton() {
@@ -78,9 +78,10 @@ const page = (() => {
         const newList = new List(listName.value, []);
 
         // Add newList to firestore
-        let currList = doc(firestore, `testUser/${newList.name}`);
-        setDoc(currList, {});
-
+        const addNewList = async () => {
+          await setDoc(doc(firestore, `testUser/${newList.name}`), {});
+        };
+        addNewList();
         localStorage.setItem(`${newList.name}`, JSON.stringify(newList));
         listArray.push(newList);
         newList.addToPage(sidebar, content);
@@ -200,21 +201,21 @@ const page = (() => {
               toDoPriority.value
             );
 
-            let currentDoc = doc(
-              firestore,
-              `testUser/${activeButton.textContent}`
-            );
             // Add todo to firestore
-
-            updateDoc(currentDoc, {
-              [newToDo.name]: {
-                name: newToDo.name,
-                date: newToDo.date,
-                priority: newToDo.priority,
-                complete: false,
-              },
-            });
-
+            const updateList = async () => {
+              await updateDoc(
+                doc(firestore, `testUser/${activeButton.textContent}`),
+                {
+                  [newToDo.name]: {
+                    name: newToDo.name,
+                    date: newToDo.date,
+                    priority: newToDo.priority,
+                    complete: false,
+                  },
+                }
+              );
+            };
+            updateList();
             list.addToDo(newToDo);
             list.display(content);
           }
@@ -239,6 +240,7 @@ const page = (() => {
   // Create default list and store in local storage if local storage is empty
   if (localStorage.length < 1) {
     const tasks = new List('Tasks', []);
+    setDoc(doc(firestore, `testUser/Tasks`), {});
     localStorage.setItem(`${tasks.name}`, JSON.stringify(tasks));
   }
 
@@ -260,3 +262,5 @@ const page = (() => {
   makeNewListButton();
   makeAddToDoButton();
 })();
+
+export { listArray };
