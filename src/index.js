@@ -2,7 +2,7 @@ import './style.css';
 import { List } from './list.js';
 import { ToDo } from './todo.js';
 import firestore from './firebase.js';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 const testDoc = doc(firestore, 'testdoc/2022-10-6');
 function writeToTest() {
@@ -240,7 +240,10 @@ const page = (() => {
   // Create default list and store in local storage if local storage is empty
   if (localStorage.length < 1) {
     const tasks = new List('Tasks', []);
-    setDoc(doc(firestore, `testUser/Tasks`), {});
+    const setTasks = async () => {
+      setDoc(doc(firestore, `testUser/Tasks`), {});
+    };
+    setTasks();
     localStorage.setItem(`${tasks.name}`, JSON.stringify(tasks));
   }
 
