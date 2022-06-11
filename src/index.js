@@ -223,13 +223,11 @@ const page = (() => {
               await updateDoc(
                 doc(firestore, `testUser/${activeButton.textContent}`),
                 {
-                  tasks: {
-                    [newToDo.name]: {
-                      name: newToDo.name,
-                      date: newToDo.date,
-                      priority: newToDo.priority,
-                      complete: false,
-                    },
+                  [`tasks.${newToDo.name}`]: {
+                    name: newToDo.name,
+                    date: newToDo.date,
+                    priority: newToDo.priority,
+                    complete: false,
                   },
                 }
               );
