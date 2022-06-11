@@ -10,6 +10,7 @@ import {
   updateDoc,
   query,
   collection,
+  orderBy,
 } from 'firebase/firestore';
 
 const testDoc = doc(firestore, 'testdoc/2022-10-6');
@@ -278,7 +279,7 @@ const page = (() => {
 
   const getLists = async () => {
     listsCont.innerHTML = '';
-    const q = query(collection(firestore, 'testUser'));
+    const q = query(collection(firestore, 'testUser'), orderBy('timestamp'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const list = new List(doc.id, Object.values(doc.data().tasks));
