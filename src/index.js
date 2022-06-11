@@ -2,7 +2,15 @@ import './style.css';
 import { List } from './list.js';
 import { ToDo } from './todo.js';
 import firestore from './firebase.js';
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  query,
+  collection,
+} from 'firebase/firestore';
 
 const testDoc = doc(firestore, 'testdoc/2022-10-6');
 function writeToTest() {
@@ -31,6 +39,11 @@ const page = (() => {
   const sidebar = document.createElement('div');
   sidebar.classList.toggle('sidebar');
   document.body.appendChild(sidebar);
+
+  // Container for lists
+  const listsCont = document.createElement('div');
+  listsCont.classList.toggle('listsContainer');
+  sidebar.appendChild(listsCont);
 
   // Content
   const content = document.createElement('div');
@@ -84,7 +97,7 @@ const page = (() => {
         addNewList();
         localStorage.setItem(`${newList.name}`, JSON.stringify(newList));
         listArray.push(newList);
-        newList.addToPage(sidebar, content);
+        newList.addToPage(listsCont, content);
         newList.display(content);
         makeNewListButton();
       }
@@ -237,31 +250,39 @@ const page = (() => {
     toDoName.focus();
   }
 
-  // Create default list and store in local storage if local storage is empty
-  if (localStorage.length < 1) {
-    const tasks = new List('Tasks', []);
-    const setTasks = async () => {
-      setDoc(doc(firestore, `testUser/Tasks`), {});
-    };
-    setTasks();
-    localStorage.setItem(`${tasks.name}`, JSON.stringify(tasks));
-  }
+  // Create default list in firestore if none exist
+  const setTasks = async () => {
+    setDoc(doc(firestore, `testUser/Tasks`), {});
+  };
 
-  // Loop through lists in local storage and populate listArray on page load
-  function getListsFromStorage() {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const listName = localStorage.key(i);
-      const listData = JSON.parse(localStorage.getItem(listName));
-      const list = new List(listData.name, listData.tasks);
+  const defaultList = async () => {
+    const tasksDoc = await getDoc(doc(firestore, 'testUser', 'Tasks'));
+    if (!tasksDoc.exists()) {
+      setTasks();
+      getLists();
+    } else {
+      console.log('Tasks exists');
+    }
+  };
+  defaultList();
+
+  // Get lists from firestore and populate listArray on page load
+
+  const getLists = async () => {
+    listsCont.innerHTML = '';
+    const q = query(collection(firestore, 'testUser'));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const list = new List(doc.id, Object.values(doc.data()));
       listArray.push(list);
-      list.addToPage(sidebar, content);
-      if (i == 0) {
+      list.addToPage(listsCont, content);
+      if (doc.id === 'Tasks') {
         list.display(content);
       }
-    }
-  }
+    });
+  };
 
-  getListsFromStorage();
+  getLists();
   makeNewListButton();
   makeAddToDoButton();
 })();
