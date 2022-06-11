@@ -170,8 +170,8 @@ export class List {
       removeButton.addEventListener('click', () => {
         // Remove task from list in firestore
         const removeTask = async () => {
-          updateDoc(doc(firestore, `testUser/${this.name}`), {
-            [task.name]: deleteField(),
+          await updateDoc(doc(firestore, `testUser/${this.name}`), {
+            [`tasks.${task.name}`]: deleteField(),
           });
         };
         removeTask();
